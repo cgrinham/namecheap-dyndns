@@ -56,7 +56,7 @@ def log_message(message):
 
 def get_ip_address():
     for provider in IP_ADDRESS_PROVIDERS:
-        logging.info(f"Get IP address from {provider}")
+        logging.info("Get IP address from {}".format(provider))
         ip_address_resp = requests.get(provider)
         if ip_address_resp.status_code == 200:
             break
@@ -76,9 +76,13 @@ def main():
         log_message("Update IP address for {host}:{domain}".format(**domain))
         resp = requests.get(TEMPLATE.format(ip_address, **domain))
         if resp.status_code != 200:
-            log_message(f"Updating domain {domain['domain']} failed - HTTP Status {resp.status_code} - Response {resp.content}")
+            log_message(
+                "Updating domain {} failed - HTTP Status {} - Response {}".format(
+                    domain['domain'], resp.status_code, resp.content))
         else:
-            log_message(f"Updating domain {domain['domain']} successful - updated IP address to {ip_address}")
+            log_message(
+                "Updating domain {} successful - updated IP address to {}".format(
+                    domain['domain'], ip_address))
 
 
 if __name__ == "__main__":
