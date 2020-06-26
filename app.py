@@ -75,7 +75,7 @@ def main():
     for domain in config["domains"]:
         log_message("Update IP address for {host}:{domain}".format(**domain))
         resp = requests.get(TEMPLATE.format(ip_address=ip_address, **domain))
-        if resp.status_code != 200:
+        if resp.status_code != 200 or "<ErrCount>1</ErrCount>" in resp.text:
             log_message(
                 "Updating domain {} failed - HTTP Status {} - Response {}".format(
                     domain['domain'], resp.status_code, resp.content))
